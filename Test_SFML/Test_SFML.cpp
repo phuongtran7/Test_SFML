@@ -1,12 +1,21 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <random>
 
 constexpr float PI = 3.14159265f;
+std::random_device dev;
+std::mt19937 rng(dev());
+
+float getNewAngle() {
+	std::uniform_real<> dist(0, 359);
+	return dist(rng);
+}
 
 int main()
 {
+
 	float ballSpeed = 0.2f;
-	float ballAngleRad = 90 * (PI / 180);
+	float ballAngleRad = getNewAngle() * (PI / 180);
 	sf::Clock clock;
 
 	sf::RenderWindow window(sf::VideoMode(520, 520), "Hello World!");
@@ -24,7 +33,7 @@ int main()
 
 	sf::CircleShape ball(50.0f);
 	ball.setFillColor(sf::Color::Green);
-	ball.setPosition(250, 250);
+	ball.setPosition(100, 100);
 
 	while (window.isOpen())
 	{
@@ -39,10 +48,16 @@ int main()
 		window.clear();
 
 		auto bound = ball.getGlobalBounds();
-		bool result = frame_bound.contains(bound.top, bound.top + bound.height);
-		if (!result)
+		bool top_bottom = frame_bound.contains(bound.left, bound.top);
+		if (!top_bottom)
 		{
-			ballAngleRad = -ballAngleRad;
+			ballAngleRad = getNewAngle();
+		}
+
+		bool left_right = frame_bound.contains(bound.left + bound.height, bound.left + bound.height);
+		if (!left_right) 
+		{
+			ballAngleRad = getNewAngle();
 		}
 
 		double elapsed = clock.restart().asMilliseconds();
