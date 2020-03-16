@@ -62,7 +62,7 @@ int main()
 
 		auto x_offset = 0.1f * ballSpeed * std::cos(ballAngleRad);
 		auto y_offset = 0.1f * ballSpeed * std::sin(ballAngleRad);
-		fmt::print("{}, {}\n", x_offset, y_offset);
+		//fmt::print("{}, {}\n", x_offset, y_offset);
 		ball.move(x_offset, y_offset);
 
 		window.draw(frame);
