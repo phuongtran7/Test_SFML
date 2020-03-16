@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <random>
+#include "fmt/format.h"
 
 constexpr float PI = 3.14159265f;
 std::random_device dev;
@@ -20,7 +21,6 @@ int main()
 {
 	float ballSpeed = 0.2f;
 	float ballAngleRad = getNewAngle() * (PI / 180);
-	sf::Clock clock;
 
 	sf::RenderWindow window(sf::VideoMode(520, 520), "Hello World!");
 
@@ -60,15 +60,16 @@ int main()
 			ball.setFillColor(getNewColor());
 		}
 
-		auto new_x_offset = ballSpeed * std::cos(ballAngleRad);
-		auto new_y_offset = ballSpeed * std::sin(ballAngleRad);
-		//std::cout << new_x_offset << ", " << new_y_offset << "\n";
-		ball.move(new_x_offset, new_y_offset);
+		auto x_offset = 0.1f * ballSpeed * std::cos(ballAngleRad);
+		auto y_offset = 0.1f * ballSpeed * std::sin(ballAngleRad);
+		fmt::print("{}, {}\n", x_offset, y_offset);
+		ball.move(x_offset, y_offset);
 
 		window.draw(frame);
 		window.draw(ball);
 
 		window.display();
+		clock.restart();
 	}
 
 	return 0;
