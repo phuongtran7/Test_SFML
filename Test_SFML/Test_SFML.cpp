@@ -69,7 +69,6 @@ int main()
 		window.draw(ball);
 
 		window.display();
-		clock.restart();
 	}
 
 	return 0;
