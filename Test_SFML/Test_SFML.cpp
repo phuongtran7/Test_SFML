@@ -17,11 +17,14 @@ int main()
 	frame.setFillColor(sf::Color(0,0,0,0));
 	frame.setPosition(10, 10);
 
+	auto frame_bound = frame.getGlobalBounds();
+	frame_bound.top += 5;
+	frame_bound.left += 5;
+	frame_bound.height -= 5;
+
 	sf::CircleShape ball(50.0f);
 	ball.setFillColor(sf::Color::Green);
-	ball.setPosition(100, 100);
-
-	auto frame_bound = frame.getGlobalBounds();
+	ball.setPosition(250, 250);
 
 	while (window.isOpen())
 	{
@@ -35,20 +38,17 @@ int main()
 
 		window.clear();
 
-		if (ball.getPosition().y + 50 > 500)
-		{
-			ballAngleRad = -ballAngleRad;
-		}
-
-		if (ball.getPosition().y - 50 < 0)
+		auto bound = ball.getGlobalBounds();
+		bool result = frame_bound.contains(bound.top, bound.top + bound.height);
+		if (!result)
 		{
 			ballAngleRad = -ballAngleRad;
 		}
 
 		double elapsed = clock.restart().asMilliseconds();
+		elapsed = 0.1;
 		auto new_x = elapsed * ballSpeed * std::cos(ballAngleRad);
 		auto new_y = elapsed * ballSpeed * std::sin(ballAngleRad);
-		std::cout << new_x << ", " << new_y << "\n";
 		ball.move(new_x, new_y);
 
 		window.draw(frame);
