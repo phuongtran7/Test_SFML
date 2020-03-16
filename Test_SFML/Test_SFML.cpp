@@ -60,8 +60,8 @@ int main()
 			ball.setFillColor(getNewColor());
 		}
 
-		auto x_offset = 0.1f * ballSpeed * std::cos(ballAngleRad);
-		auto y_offset = 0.1f * ballSpeed * std::sin(ballAngleRad);
+		auto x_offset = 0.2f * ballSpeed * std::cos(ballAngleRad);
+		auto y_offset = 0.2f * ballSpeed * std::sin(ballAngleRad);
 		//fmt::print("{}, {}\n", x_offset, y_offset);
 		ball.move(x_offset, y_offset);
 
