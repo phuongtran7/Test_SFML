@@ -11,6 +11,11 @@ double getNewAngle() {
 	return dist(rng);
 }
 
+sf::Color getNewColor() {
+	std::uniform_int_distribution<> dist(0, 255);
+	return sf::Color(dist(rng), dist(rng), dist(rng));
+}
+
 int main()
 {
 	float ballSpeed = 0.2f;
@@ -52,11 +57,12 @@ int main()
 		if (!is_inside)
 		{
 			ballAngleRad = getNewAngle();
+			ball.setFillColor(getNewColor());
 		}
 
 		auto new_x_offset = ballSpeed * std::cos(ballAngleRad);
 		auto new_y_offset = ballSpeed * std::sin(ballAngleRad);
-		std::cout << new_x_offset << ", " << new_y_offset << "\n";
+		//std::cout << new_x_offset << ", " << new_y_offset << "\n";
 		ball.move(new_x_offset, new_y_offset);
 
 		window.draw(frame);
