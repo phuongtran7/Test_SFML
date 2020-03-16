@@ -27,9 +27,10 @@ int main()
 	frame.setPosition(10, 10);
 
 	auto frame_bound = frame.getGlobalBounds();
-	frame_bound.top += 5;
-	frame_bound.left += 5;
-	frame_bound.height -= 5;
+	//frame_bound.top += 5;
+	//frame_bound.left += 5;
+	//frame_bound.height -= 5;
+	//frame_bound.width -= 5;
 
 	sf::CircleShape ball(50.0f);
 	ball.setFillColor(sf::Color::Green);
@@ -48,14 +49,12 @@ int main()
 		window.clear();
 
 		auto bound = ball.getGlobalBounds();
-		bool top_bottom = frame_bound.contains(bound.left, bound.top);
-		if (!top_bottom)
-		{
-			ballAngleRad = getNewAngle();
-		}
+		bool is_inside = frame_bound.contains(bound.left, bound.top)
+			&& frame_bound.contains(bound.left + bound.width, bound.top)
+			&& frame_bound.contains(bound.left, bound.top + bound.height)
+			&& frame_bound.contains(bound.left + bound.width, bound.top + bound.height);
 
-		bool left_right = frame_bound.contains(bound.left + bound.height, bound.left + bound.height);
-		if (!left_right) 
+		if (!is_inside)
 		{
 			ballAngleRad = getNewAngle();
 		}
