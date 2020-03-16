@@ -54,10 +54,8 @@ int main()
 			ballAngleRad = getNewAngle();
 		}
 
-		double elapsed = clock.restart().asMilliseconds();
-		//elapsed = 0.1f;
-		auto new_x_offset = /*elapsed **/ ballSpeed * std::cos(ballAngleRad);
-		auto new_y_offset = /*elapsed **/ ballSpeed * std::sin(ballAngleRad);
+		auto new_x_offset = ballSpeed * std::cos(ballAngleRad);
+		auto new_y_offset = ballSpeed * std::sin(ballAngleRad);
 		std::cout << new_x_offset << ", " << new_y_offset << "\n";
 		ball.move(new_x_offset, new_y_offset);
 
