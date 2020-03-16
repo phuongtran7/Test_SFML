@@ -6,14 +6,13 @@ constexpr float PI = 3.14159265f;
 std::random_device dev;
 std::mt19937 rng(dev());
 
-float getNewAngle() {
-	std::uniform_real<> dist(0, 359);
+double getNewAngle() {
+	std::uniform_real_distribution<> dist(0, 359);
 	return dist(rng);
 }
 
 int main()
 {
-
 	float ballSpeed = 0.2f;
 	float ballAngleRad = getNewAngle() * (PI / 180);
 	sf::Clock clock;
@@ -27,10 +26,6 @@ int main()
 	frame.setPosition(10, 10);
 
 	auto frame_bound = frame.getGlobalBounds();
-	//frame_bound.top += 5;
-	//frame_bound.left += 5;
-	//frame_bound.height -= 5;
-	//frame_bound.width -= 5;
 
 	sf::CircleShape ball(50.0f);
 	ball.setFillColor(sf::Color::Green);
@@ -60,10 +55,11 @@ int main()
 		}
 
 		double elapsed = clock.restart().asMilliseconds();
-		elapsed = 0.1;
-		auto new_x = elapsed * ballSpeed * std::cos(ballAngleRad);
-		auto new_y = elapsed * ballSpeed * std::sin(ballAngleRad);
-		ball.move(new_x, new_y);
+		//elapsed = 0.1f;
+		auto new_x_offset = /*elapsed **/ ballSpeed * std::cos(ballAngleRad);
+		auto new_y_offset = /*elapsed **/ ballSpeed * std::sin(ballAngleRad);
+		std::cout << new_x_offset << ", " << new_y_offset << "\n";
+		ball.move(new_x_offset, new_y_offset);
 
 		window.draw(frame);
 		window.draw(ball);
