@@ -38,17 +38,29 @@ int main()
 
 	while (window.isOpen())
 	{
+		auto bound = ball.getGlobalBounds();
+
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed) {
 				window.close();
 			}
+			else if (event.type == sf::Event::MouseButtonPressed)
+			{
+				if (event.mouseButton.button == sf::Mouse::Left)
+				{
+					if (bound.contains(event.mouseButton.x, event.mouseButton.y)) {
+						fmt::print("Got cha!\n");
+						ball.setFillColor(getNewColor());
+						ballSpeed += 0.05f;
+					}
+				}
+			}
 		}
 
 		window.clear();
 
-		auto bound = ball.getGlobalBounds();
 		bool is_inside = frame_bound.contains(bound.left, bound.top)
 			&& frame_bound.contains(bound.left + bound.width, bound.top)
 			&& frame_bound.contains(bound.left, bound.top + bound.height)
@@ -57,7 +69,6 @@ int main()
 		if (!is_inside)
 		{
 			ballAngleRad = getNewAngle();
-			ball.setFillColor(getNewColor());
 		}
 
 		auto x_offset = 0.2f * ballSpeed * std::cos(ballAngleRad);
